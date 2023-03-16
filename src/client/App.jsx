@@ -1,10 +1,13 @@
-import { ThemeProvider } from 'styled-components'
+import { ThemeProvider, useTheme } from 'styled-components'
 import { LightTheme, DarkTheme } from './themes'
-function App() {
-  const [theme, setTheme] = useState(LightTheme)
+import { RouterProvider } from 'react-router-dom'
+import { router } from './router'
 
+function App() {
+  const theme = LightTheme
   return (
     <ThemeProvider theme={theme}>
+      <RouterProvider router={router}/>
     </ThemeProvider>
   )
 }
