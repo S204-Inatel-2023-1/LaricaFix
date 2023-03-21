@@ -76,13 +76,76 @@
       "Receitas": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string",
-            "example": "Bobó de camarão"
+          "id": {
+            "type": "number",
+            "example": 192168
           },
           "imagem": {
             "type": "string",
             "example": "https://img.itdg.com.br/images/recipes/000/000/112/318669/318669_original.jpg"
+          },
+          "title": {
+            "type": "string",
+            "example": "Bobó de camarão"
+          },
+          "missedIngredients": {
+            "$ref": "#/components/schemas/Ingredient"
+          },
+          "unusedIngredients": {
+            "type": "array",
+            "example": []
+          },
+          "usedIngredients": {
+            "$ref": "#/components/schemas/Ingredient"
+          }
+        }
+      },
+      "Ingredient": {
+        "type": "object",
+        "properties": {
+          "aisle": {
+            "type": "string",
+            "example": "Baking"
+          },
+          "amount": {
+            "type": "number",
+            "example": 1
+          },
+          "id": {
+            "type": "number",
+            "example": 18371
+          },
+          "image": {
+            "type": "string",
+            "example": "https://spoonacular.com/cdn/ingredients_100x100/white-powder.jpg"
+          },
+          "meta": {
+            "type": "array",
+            "example": []
+          },
+          "name": {
+            "type": "string",
+            "example": "baking powder"
+          },
+          "original": {
+            "type": "string",
+            "example": "1 tsp baking powder"
+          },
+          "originalName": {
+            "type": "string",
+            "example": "baking powder"
+          },
+          "unit": {
+            "type": "string",
+            "example": "tsp"
+          },
+          "unitLong": {
+            "type": "string",
+            "example": "teaspoon"
+          },
+          "unitShort": {
+            "type": "string",
+            "example": "tsp"
           }
         }
       }
