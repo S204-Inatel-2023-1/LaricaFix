@@ -5,11 +5,11 @@ import router from './routes/router.js';
 const app = express();
 
 app.use(express.json());
-app.use('/api', router);
+app.use(router);
 
 app.use(express.static('dist/client'));
 
-app.get('*', (_req, res) => {
+app.get('/html', (_req, res) => {
   res.sendFile(path.join(path.resolve(), 'dist/client/index.html'));
 });
 
