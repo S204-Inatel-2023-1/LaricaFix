@@ -1,15 +1,14 @@
-import path from 'path';
-import express from 'express';
-import router from './routes/router.js';
+import path from 'path'; // Módulo que trabalha com resolução de caminhos
+import express from 'express'; // Módulo que facilita a criação de um servidor
+import router from './routes/router.js';  // Rotas da nossa aplicação
 
-const app = express();
+const app = express(); // Cria o servidor
+app.use(express.json());  // Configura o servidor para trabalhar com JSON
+app.use('/api', router);  // Configura o servidor para receber requisições nas rotas desejadas
+app.use(express.static('dist/client')); // Configura o servidor para enviar arquivos estáticos presentes na pasta dist/client
 
-app.use(express.json());
-app.use(router);
-
-app.use(express.static('dist/client'));
-
-app.get('/html', (_req, res) => {
+/** Fornece todo o frontend através da rota /html */
+app.get('*', (_req, res) => {
   res.sendFile(path.join(path.resolve(), 'dist/client/index.html'));
 });
 
