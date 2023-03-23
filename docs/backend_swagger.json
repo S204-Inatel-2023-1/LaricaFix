@@ -1,0 +1,184 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Laricafix",
+    "description": "Desenvolvimento de uma aplicação web com o objetivo de auxiliar as pessoas no preparo de receitas com aquilo que se tem em casa",
+    "contact": {
+      "email": "samuel.alves@ges.inatel.br"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "Ainda sem servidor"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Receitas",
+      "description": "Tudo sobre as receitas"
+    },
+    {
+      "name": "Ingredientes",
+      "description": "Tudo sobre os ingredientes"
+    },
+    {
+      "name": "Usuários",
+      "description": "Operações do usuário"
+    }
+  ],
+  "paths": {
+    "/receitas": {
+      "get": {
+        "tags": [
+          "Receitas"
+        ],
+        "summary": "Procura por receitas com base nos ingredientes",
+        "description": "Retorna um array de receitas que podem ser feitas com os ingredientes informados",
+        "parameters": [
+          {
+            "name": "ingredientes",
+            "in": "query",
+            "description": "Ingredientes usados como filtro",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Receitas"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Receitas": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 192168
+          },
+          "imagem": {
+            "type": "string",
+            "example": "https://img.itdg.com.br/images/recipes/000/000/112/318669/318669_original.jpg"
+          },
+          "title": {
+            "type": "string",
+            "example": "Bobó de camarão"
+          },
+          "missedIngredients": {
+            "$ref": "#/components/schemas/Ingredient"
+          },
+          "unusedIngredients": {
+            "type": "array",
+            "example": []
+          },
+          "usedIngredients": {
+            "$ref": "#/components/schemas/Ingredient"
+          }
+        }
+      },
+      "Ingredient": {
+        "type": "object",
+        "properties": {
+          "aisle": {
+            "type": "string",
+            "example": "Baking"
+          },
+          "amount": {
+            "type": "number",
+            "example": 1
+          },
+          "id": {
+            "type": "number",
+            "example": 18371
+          },
+          "image": {
+            "type": "string",
+            "example": "https://spoonacular.com/cdn/ingredients_100x100/white-powder.jpg"
+          },
+          "meta": {
+            "type": "array",
+            "example": []
+          },
+          "name": {
+            "type": "string",
+            "example": "baking powder"
+          },
+          "original": {
+            "type": "string",
+            "example": "1 tsp baking powder"
+          },
+          "originalName": {
+            "type": "string",
+            "example": "baking powder"
+          },
+          "unit": {
+            "type": "string",
+            "example": "tsp"
+          },
+          "unitLong": {
+            "type": "string",
+            "example": "teaspoon"
+          },
+          "unitShort": {
+            "type": "string",
+            "example": "tsp"
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "Pet": {
+        "description": "Pet object that needs to be added to the store",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Receitas"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "#/components/schemas/Receitas"
+            }
+          }
+        }
+      },
+      "UserArray": {
+        "description": "List of user object",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Receitas"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
