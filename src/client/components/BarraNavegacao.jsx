@@ -113,7 +113,7 @@ export const BarraNavegacao = (props) => {
                     {drawer}
                 </Drawer>
             </Box>
-            <Box component="main" sx={{ p: 3 }}>
+            <Box component="main" sx={{ p: 3, display: 'flex', flexDirection: 'column', alignItems:"center", width: '100%' }}>
                 <Toolbar />
                 {props.children}
             </Box>
