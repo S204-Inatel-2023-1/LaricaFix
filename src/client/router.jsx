@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Login, Ingrediente, ListaIngredientes, Receita, ListaReceitas, Perfil } from "./pages";
+import { Home, Login, Ingrediente, ListaIngredientes, Receita, ListaReceitas, Perfil, RotaInvalida} from "./pages";
 import { Container } from "./components";
 import { createBrowserRouter } from "react-router-dom";
 
@@ -9,6 +9,10 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: "/",
+                element: <Home />,
+            },
+            {
+                path: "/login",
                 element: <Login />,
             },
             {
@@ -31,6 +35,10 @@ export const router = createBrowserRouter([
                 path: "/ingredientes",
                 element: <ListaIngredientes />,
             },
+            {
+                path: "/*",
+                element: <RotaInvalida />,
+              },
         ],
     },
 ]);

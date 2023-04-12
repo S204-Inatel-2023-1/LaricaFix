@@ -10,8 +10,8 @@ export const LightTheme = createTheme({
       main: '#d8ad52',
     },
     background: {
-      default: '#d9d9d9',
-      paper: '#f0f0f0',
+      default: '#f1f1f1',
+      paper: '#e6e6e6',
     },
   },
 });
