@@ -1,5 +1,5 @@
-import { ThemeProvider, useTheme } from 'styled-components'
 import { LightTheme, DarkTheme } from './themes'
+import { ThemeProvider} from "@mui/material"
 import { RouterProvider } from 'react-router-dom'
 import { router } from './router'
 
