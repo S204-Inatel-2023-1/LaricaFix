@@ -8,5 +8,5 @@ const { PORT = 3000 } = process.env;
  * mesmo sendo chamada apenas uma vez ela fica em execução permanentemente como se fosse um loop
  */
 app.listen(PORT, () => {
-  console.log(`Servidor LaricaFix em execução e disponível em http://localhost:${SERVER_PORT}`);
+  console.log(`Servidor LaricaFix em execução e disponível em http://localhost:${PORT}`);
 });
