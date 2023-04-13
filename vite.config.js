@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr'
 
 dotenv.config();
-const { SERVER_PORT = 3000, CLIENT_PORT = 3001 } = process.env;
+const { PORT = 3000, CLIENT_PORT = 3001 } = process.env;
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -21,7 +21,7 @@ export default defineConfig({
     host: '0.0.0.0',
     proxy: {
       '/api': {
-        target: `http://localhost:${SERVER_PORT}`,
+        target: `http://localhost:${PORT}`,
         changeOrigin: true,
       },
     },
