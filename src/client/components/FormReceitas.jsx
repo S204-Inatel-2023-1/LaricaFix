@@ -3,17 +3,23 @@ import { useState } from 'react';
 import { MulticheckSelect } from './';
 import { Dietas, Intolerancias } from '../constants';
 
-export const FormReceitas = () => {
+export const FormReceitas = ({ setReceitas }) => {
     const [pesquisa, setPesquisa] = useState("");
     const [carrinho, setCarrinho] = useState(false);
     const [dietasSelecionadas, setDietasSelecionadas] = useState([]);
     const [intoleranciasSelecionadas, setIntoleranciasSelecionadas] = useState([]);
 
     const searchRecipes = () => {
-        console.log(pesquisa)
-        console.log(carrinho)
-        console.log(intoleranciasSelecionadas)
-        console.log(dietasSelecionadas);
+        const requestUrl = new URL("../api/receitas", document.baseURI)
+        if (pesquisa.length)
+            requestUrl.searchParams.append("nome", pesquisa)
+        // if (carrinho)
+        //     requestUrl.searchParams.append("carrinho", carrinho)
+        if (dietasSelecionadas.length)
+            requestUrl.searchParams.append("dietas", dietasSelecionadas.join("|"))
+        if (intoleranciasSelecionadas.length)
+            requestUrl.searchParams.append("intolerancias", intoleranciasSelecionadas.join(","))
+        fetch(requestUrl).then(res => res.json()).then(res => setReceitas(res.results))
     };
 
     return (

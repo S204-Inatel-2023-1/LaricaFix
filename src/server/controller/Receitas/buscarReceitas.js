@@ -9,7 +9,7 @@ export default async function (req, res) {
   if (nome.length)
     requestUrl.searchParams.append('query', nome);
   if (ingredientes.length)
-    url.searchParams.append('includeIngredients', ingredientes);
+    requestUrl.searchParams.append('includeIngredients', ingredientes);
   if (dietas.length)
     requestUrl.searchParams.append('diet', dietas);
   if (intolerancias.length)
