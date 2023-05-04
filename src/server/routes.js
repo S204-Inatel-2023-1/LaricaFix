@@ -1,13 +1,18 @@
 import express from 'express'; //Desacoplando o módulo de rotas do express
-import buscarReceitasPorIngredientes from './controller/Receitas/buscarReceitasPorIngredientes.js'
-import buscarReceitasPorNome from './controller/Receitas/buscarReceitasPorNome.js'
-import buscarReceitasPorID from './controller/Receitas/buscarReceitasPorID.js'
-import buscarReceitasPorInstrucoes from './controller/Receitas/buscarReceitasPorInstrucoes.js'
+import * as mock from './controllerMock/index.js'
+import * as prod from './controller/index.js'
+
 const routes = express.Router();
 
-routes.get('/receitas/ingrediente', buscarReceitasPorIngredientes.index);
-routes.get('/receitas/nome', buscarReceitasPorNome.index);
-routes.get('/receitas/id', buscarReceitasPorID.index);
-routes.get('/receitas/instrucoes', buscarReceitasPorInstrucoes.index);
+const spoonacularKey = process.env.SPOONACULAR_KEY || '';
 
+const usedRoutes = spoonacularKey.length? prod.default : mock.default;
+
+//Receitas
+routes.get('/receitas', usedRoutes.receitas.buscarReceitas);
+routes.get('/receitas/id', usedRoutes.receitas.buscarReceitasPorID);
+
+//Ingredientes
+
+//Usuario
 export default routes
