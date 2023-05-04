@@ -1,4 +1,8 @@
+import { FormReceitas } from "../components";
+
 
 export const ListaReceitas = () => {
-    return (<>ListaReceitas</>)
+    return (<>
+        <FormReceitas />
+    </>)
 }
