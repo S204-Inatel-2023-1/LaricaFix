@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "start": "npm run build && node dist/server/server.js",
+    "start": "node dist/server/server.js",
     "build": "npm run build:server && npm run build:client",
     "build:server": "babel --verbose --out-dir dist/server src/server",
     "build:client": "vite build",
