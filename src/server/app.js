@@ -1,6 +1,3 @@
-import { config } from 'dotenv';
-config();
-
 import path from 'path'; // Módulo que trabalha com resolução de caminhos
 import express from 'express'; // Módulo que facilita a criação de um servidor
 import routes from './routes.js';  // Rotas da nossa aplicação

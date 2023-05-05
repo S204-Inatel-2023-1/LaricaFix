@@ -4,13 +4,13 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "start": "node dist/server/server.js",
+    "start": "node -r dotenv/config dist/server/server.js",
     "build": "npm run build:server && npm run build:client",
     "build:server": "babel --verbose --out-dir dist/server src/server",
     "build:client": "vite build",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:client": "vite",
-    "dev:server": "nodemon src/server/server.js",
+    "dev:server": "nodemon -r dotenv/config src/server/server.js",
     "preview": "vite preview"
   },
   "devDependencies": {
@@ -28,6 +28,7 @@
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.11.13",
     "@mui/styled-engine-sc": "^5.11.11",
+    "axios": "^1.4.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "react": "^18.2.0",
