@@ -42,9 +42,11 @@ export const FormReceitas = ({ setReceitas }) => {
                     labelPlacement="end"
                     sx={{ flexGrow: 1, display: "flex", justifyContent: "center" }}
                 />
+                <div style={{display:'flex', justifyContent:'center', flexGrow:1, maxWidth:"100%"}}>
                 <MulticheckSelect options={Dietas} label={'Dietas'} selected={dietasSelecionadas} setSelected={setDietasSelecionadas} />
                 <MulticheckSelect options={Intolerancias} label={'Intolerancias'} selected={intoleranciasSelecionadas} setSelected={setIntoleranciasSelecionadas} />
-                <Button variant="contained" sx={{ maxWidth: '20%', minWidth: "fit-content", flexGrow: 1 }} onClick={searchRecipes}>Buscar</Button>
+                </div>
+                <Button variant="contained" sx={{ width: {xs:'100%', md:'20%'}, minWidth: "fit-content", flexGrow: 1 }} onClick={searchRecipes}>Buscar</Button>
             </FormGroup>
         </FormControl>
     )
