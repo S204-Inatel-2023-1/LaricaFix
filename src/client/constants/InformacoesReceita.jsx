@@ -1,7 +1,7 @@
 export const InformacoesReceita = {
     "vegetarian": false,
     "vegan": false,
-    "glutenFree": false,
+    "glutenFree": true,
     "dairyFree": false,
     "veryHealthy": true,
     "cheap": false,
@@ -338,7 +338,7 @@ export const InformacoesReceita = {
     "instructions": "<ol><li>Cook pasta in a large pot of boiling water until al dente. Drain and return to warm pot. Put olive oil in saucepan and add onion. Saute until transparent. Stir in flour and cook for a few seconds and then whisk in milk. Stir constantly until this thickens. Add peas, tuna (shredded into chunks,) parsley, green onions, cheese and hot pepper sauce. Pour over pasta and stir gently to mix. Serve at once.</li></ol>",
     "analyzedInstructions": [
         {
-            "name": "",
+            "name": "Carne",
             "steps": [
                 {
                     "number": 1,
@@ -485,6 +485,14 @@ export const InformacoesReceita = {
                     "step": "Serve at once.",
                     "ingredients": [],
                     "equipment": []
+                }
+            ]
+        },
+        {
+            "name": "Teste",
+            "steps":[
+                {
+                    step: "Teste step"
                 }
             ]
         }
