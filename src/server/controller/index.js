@@ -1,5 +1,6 @@
 import buscarIngredientes from './Ingredientes/buscarIngredientes.js';
 import buscarIngredientesPorID from './Ingredientes/buscarIngredientesPorID.js';
+import buscarIngredientesPorNome from './Ingredientes/buscarIngredientesPorNome.js';
 import buscarReceitasPorID from "./Receitas/buscarReceitasPorID.js";
 import buscarReceitas from "./Receitas/buscarReceitas.js";
 import buscarFavoritos from "./Usuario/buscarFavoritos.js"
@@ -10,6 +11,7 @@ import buscarHistorico from "./Usuario/buscarHistorico.js"
 
 import buscarIngredientesMock from './Ingredientes/mocks/buscarIngredientes.js';
 import buscarIngredientesPorIDMock from './Ingredientes/mocks/buscarIngredientesPorID.js';
+import buscarIngredientesPorNomeMock from './Ingredientes/mocks/buscarIngredientesPorNome.js';
 import buscarReceitasPorIDMock from "./Receitas/mocks/buscarReceitasPorID.js";
 import buscarReceitasMock from "./Receitas/mocks/buscarReceitas.js";
 import buscarFavoritosMock from "./Usuario/mocks/buscarFavoritos.js"
@@ -21,6 +23,7 @@ import buscarHistoricoMock from "./Usuario/mocks/buscarHistorico.js"
 const prod = {
     buscarIngredientes,
     buscarIngredientesPorID,
+    buscarIngredientesPorNome,
     buscarReceitasPorID,
     buscarReceitas,
     buscarFavoritos,
@@ -33,6 +36,7 @@ const prod = {
 const mock = {
     buscarIngredientes: buscarIngredientesMock,
     buscarIngredientesPorID: buscarIngredientesPorIDMock,
+    buscarIngredientesPorNome: buscarIngredientesPorNomeMock,
     buscarReceitasPorID: buscarReceitasPorIDMock,
     buscarReceitas: buscarReceitasMock,
     buscarFavoritos: buscarFavoritosMock,
