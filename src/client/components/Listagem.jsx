@@ -16,8 +16,8 @@ export const Listagem = ({ itemsDaLista, url }) => {
             {itemsDaLista.map((item) => (
                 <Tooltip title={item.title} placement="top" key={item.id}>
                     <Box key={item.id} sx={{
-                        width: '18%', aspectRatio: '1.35', backgroundImage: `url(${item.image})`,
-                        backgroundPosition: 'center', backgroundSize: '', borderRadius: '10px',
+                        width: {xs: "36%", md: "24%",lg:'18%'}, aspectRatio: '1.35', backgroundImage: `url(${item.image})`,
+                        backgroundPosition: 'center', backgroundSize: 'cover', borderRadius: '10px',
                         cursor: 'pointer'
                     }} onClick={()=>goTo(item.id)}>
                     </Box>

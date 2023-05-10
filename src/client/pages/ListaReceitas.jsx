@@ -1,7 +1,5 @@
-import { FormReceitas } from "../components";
+import { FormReceitas, Listagem } from "../components";
 import { useState } from "react";
-import { Listagem } from "../components/Listagem";
-
 
 
 export const ListaReceitas = () => {
