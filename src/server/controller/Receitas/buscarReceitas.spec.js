@@ -7,6 +7,5 @@ describe('Testando controller /receitas/',  ()=> {
     expect(response.status).toBe(200)
     const data = JSON.parse(response.res.text)
     expect(data.response.length).toBe(100)
-    //console.log(data)
   })
 })

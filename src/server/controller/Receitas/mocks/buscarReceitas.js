@@ -3,7 +3,6 @@ export default async function (req, res) {
   
     console.log('Os ingredientes desejados pelo cliente na receita foram', ingredientesRecebidos.toLocaleString())
    */
-    console.log('teste')
     const response = getExampleResponse()
   
     res.status(200).json({
