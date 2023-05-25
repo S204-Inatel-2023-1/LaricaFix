@@ -34,7 +34,6 @@ const prod = {
 const mock = {
     buscarIngredientes: buscarIngredientesMock,
     buscarIngredientesPorID: buscarIngredientesPorIDMock,
-    buscarIngredientesPorNome: buscarIngredientesPorNomeMock,
     buscarFavoritos: buscarFavoritosMock,
     buscarUsuario: buscarUsuarioMock,
     criarUsuario: criarUsuarioMock,
