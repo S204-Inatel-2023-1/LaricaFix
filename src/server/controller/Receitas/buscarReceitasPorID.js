@@ -1,9 +1,19 @@
 import axios from 'axios';
+import buscarReceitasPorIDMock from "./mocks/buscarReceitasPorID.js";
 
-export default async function (req, res) {
+export default async function (req, res, next) {
   try {
-    const idPrato = req.query.id
-    const url = "https://api.spoonacular.com/recipes/" + idPrato + "/information?apiKey=" + process.env.SPOONACULAR_KEY + "&includeNutrition=true"
+
+    if (req.query.apiKey == 'undefined') {
+      await buscarReceitasPorIDMock(req, res)
+      return next()
+    }
+
+    const idPrato = req.query.idPrato
+    const pag = req.query.pag || 0;
+    const apiKey = req.query.apiKey
+
+    const url = `https://api.spoonacular.com/recipes/${idPrato}/information?includeNutrition=true&number=25&offset=${pag}&apiKey=${apiKey}`
     const response = await axios.get(url);
     res.set("x-api-quota-request", response.headers["x-api-quota-request"]);
     res.set("x-api-quota-used", response.headers["x-api-quota-used"]);
