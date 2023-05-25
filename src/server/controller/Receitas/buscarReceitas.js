@@ -1,14 +1,21 @@
 import axios from 'axios';
+import buscarReceitasMock from "./mocks/buscarReceitas.js";
 
-export default async function (req, res) {
+export default async function (req, res, next) {
 
   try {
+
+    if (req.query.apiKey == 'undefined') {
+      await buscarReceitasMock(req, res)
+      return next()
+    }
+
     const nome = req.query.nome || '';
     const ingredientes = req.query.ingredientes || '';
     const dietas = req.query.dietas || '';
     const intolerancias = req.query.intolerancias || '';
     const pag = req.query.pag || '';
-    const apiKey = req.query.apiKey=='undefined' ? '': req.query.apiKey;
+    const apiKey = req.query.apiKey
 
     let url = "https://api.spoonacular.com/recipes/complexSearch?"
     if (nome.length)
@@ -20,7 +27,7 @@ export default async function (req, res) {
     if (intolerancias.length)
       url = url.concat(`&intolerances=${intolerancias}`);
     if (pag.length)
-        url = url.concat(`&offset=${pag}`);
+      url = url.concat(`&offset=${pag}`);
     if (apiKey.length)
       url = url.concat(`&apiKey=${apiKey}`);
 

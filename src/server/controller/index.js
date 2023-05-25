@@ -13,7 +13,6 @@ import buscarIngredientesMock from './Ingredientes/mocks/buscarIngredientes.js';
 import buscarIngredientesPorIDMock from './Ingredientes/mocks/buscarIngredientesPorID.js';
 import buscarIngredientesPorNomeMock from './Ingredientes/mocks/buscarIngredientesPorNome.js';
 import buscarReceitasPorIDMock from "./Receitas/mocks/buscarReceitasPorID.js";
-import buscarReceitasMock from "./Receitas/mocks/buscarReceitas.js";
 import buscarFavoritosMock from "./Usuario/mocks/buscarFavoritos.js"
 import buscarUsuarioMock from "./Usuario/mocks/buscarUsuario.js"
 import criarUsuarioMock from "./Usuario/mocks/criarUsuario.js"
@@ -38,7 +37,6 @@ const mock = {
     buscarIngredientesPorID: buscarIngredientesPorIDMock,
     buscarIngredientesPorNome: buscarIngredientesPorNomeMock,
     buscarReceitasPorID: buscarReceitasPorIDMock,
-    buscarReceitas: buscarReceitasMock,
     buscarFavoritos: buscarFavoritosMock,
     buscarUsuario: buscarUsuarioMock,
     criarUsuario: criarUsuarioMock,
