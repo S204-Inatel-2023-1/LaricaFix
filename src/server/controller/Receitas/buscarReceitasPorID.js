@@ -9,11 +9,11 @@ export default async function (req, res, next) {
       return next()
     }
 
-    const idPrato = req.query.idPrato
-    const pag = req.query.pag || 0;
+    const idPrato = req.query.id
+    const offset = req.query.offset || 0;
     const apiKey = req.query.apiKey
 
-    const url = `https://api.spoonacular.com/recipes/${idPrato}/information?includeNutrition=true&number=25&offset=${pag}&apiKey=${apiKey}`
+    const url = `https://api.spoonacular.com/recipes/${idPrato}/information?apiKey=${apiKey}&offset=${offset}&number=25&includeNutrition=true`
     const response = await axios.get(url);
     res.set("x-api-quota-request", response.headers["x-api-quota-request"]);
     res.set("x-api-quota-used", response.headers["x-api-quota-used"]);
