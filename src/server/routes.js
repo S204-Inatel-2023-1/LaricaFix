@@ -5,10 +5,10 @@ const routes = express.Router();
 
 //Receitas
 routes.get('/receitas', controller.buscarReceitas);
-routes.get('/receitas/id', controller.buscarReceitasPorID);
+routes.get('/receitas/:id', controller.buscarReceitasPorID);
 
 //Ingredientes
-routes.get('/ingredientes/nome', controller.buscarIngredientesPorNome);
+routes.get('/ingredientes/:nome', controller.buscarIngredientesPorNome);
 
 //Usuario
 export default routes
