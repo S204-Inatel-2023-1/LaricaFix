@@ -14,10 +14,10 @@ export default async function (req, res, next) {
     const ingredientes = req.query.ingredientes || '';
     const dietas = req.query.dietas || '';
     const intolerancias = req.query.intolerancias || '';
-    const pag = req.query.pag || '';
+    const offset = req.query.offset || 0;
     const apiKey = req.query.apiKey
 
-    let url = "https://api.spoonacular.com/recipes/complexSearch?"
+    let url = `https://api.spoonacular.com/recipes/complexSearch?&apiKey=${apiKey}&offset=${offset}&number=25`
     if (nome.length)
       url = url.concat(`&query=${nome}`);
     if (ingredientes.length)
@@ -26,12 +26,6 @@ export default async function (req, res, next) {
       url = url.concat(`&diet=${dietas}`);
     if (intolerancias.length)
       url = url.concat(`&intolerances=${intolerancias}`);
-    if (pag.length)
-      url = url.concat(`&offset=${pag}`);
-    if (apiKey.length)
-      url = url.concat(`&apiKey=${apiKey}`);
-
-    url = url.concat(`&number=25`);
 
     const response = await axios.get(url);
     res.set("x-api-quota-request", response.headers["x-api-quota-request"]);
