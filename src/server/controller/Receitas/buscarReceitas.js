@@ -5,7 +5,7 @@ export default async function (req, res, next) {
 
   try {
 
-    if (req.query.apiKey == 'undefined') {
+    if (req.query.apiKey == 'undefined' || req.query.apiKey == undefined) {
       await buscarReceitasMock(req, res)
       return next()
     }
