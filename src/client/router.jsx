@@ -25,8 +25,13 @@ export const router = createBrowserRouter([
             {
                 path: "/receita/:id",
                 element: <Receita />,
-                loader: ({ params }) => {
-                    return  params.id;
+                loader: async ({ request }) => {
+                    const id = request.url.split("/").pop()
+                    const requestUrl = new URL("../api/receitas/" + encodeURI(id), document.baseURI)
+                    requestUrl.searchParams.append("apiKey", import.meta.env.VITE_SPOONACULAR_KEY || "")
+
+                    const response = await fetch(requestUrl).then(res => res.json())
+                    return response
                 },
             },
             {
