@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { TextField, Button, FormControl, FormLabel, FormGroup } from '@mui/material';
 
+const apiKey = import.meta.env.VITE_SPOONACULAR_KEY || ""
 export const FormIngredientes = ({ setIngredientes }) => {
     const [pesquisa, setPesquisa] = useState("");
 
     const searchIngredients = () => {
-        const requestUrl = new URL("../api/ingredientes/nome", document.baseURI)
-        if (pesquisa.length)
-            requestUrl.searchParams.append("nome", pesquisa)
-        requestUrl.searchParams.append("quantidade", 25)
+        const requestUrl = new URL("../api/ingredientes/" + encodeURI(pesquisa), document.baseURI)
+        requestUrl.searchParams.append("apiKey", apiKey)
+
         fetch(requestUrl).then(res => res.json()).then(res => {
             res.results.map(ing => ing.image = "https://spoonacular.com/cdn/ingredients_500x500/" + ing.image)
             res.results.map(ing => ing.title = ing.name)
