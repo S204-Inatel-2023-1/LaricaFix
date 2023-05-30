@@ -31,7 +31,8 @@ export default {
     "app.js",
     "server.js",
     "routes.js",
-    "index.js"
+    "index.js",
+    "/src/server/controller/Usuario/*"
   ],
 
   // Indicates which provider should be used to instrument code for coverage

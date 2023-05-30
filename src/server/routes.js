@@ -8,7 +8,7 @@ routes.get('/receitas', controller.buscarReceitas);
 routes.get('/receitas/:id', controller.buscarReceitasPorID);
 
 //Ingredientes
-routes.get('/ingredientes/:nome', controller.buscarIngredientesPorNome);
+routes.get('/ingredientes/:param', controller.buscarIngredientesPorParam);
 
 //Usuario
 export default routes
