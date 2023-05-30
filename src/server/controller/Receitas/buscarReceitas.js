@@ -2,7 +2,6 @@ import axios from 'axios';
 import buscarReceitasMock from "./mocks/buscarReceitas.js";
 
 export default async function (req, res) {
-
   try {
     let response 
 
