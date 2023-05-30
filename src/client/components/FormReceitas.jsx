@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { MulticheckSelect } from './';
 import { Dietas, Intolerancias } from '../constants';
 
+const apiKey = import.meta.env.VITE_SPOONACULAR_KEY || ""
+
 export const FormReceitas = ({ setReceitas }) => {
     const [pesquisa, setPesquisa] = useState("");
     const [carrinho, setCarrinho] = useState(false);
@@ -19,6 +21,8 @@ export const FormReceitas = ({ setReceitas }) => {
             requestUrl.searchParams.append("dietas", dietasSelecionadas.join("|"))
         if (intoleranciasSelecionadas.length)
             requestUrl.searchParams.append("intolerancias", intoleranciasSelecionadas.join(","))
+
+        requestUrl.searchParams.append("apiKey", apiKey)
         fetch(requestUrl).then(res => res.json()).then(res => setReceitas(res.results))
     };
 
@@ -42,11 +46,11 @@ export const FormReceitas = ({ setReceitas }) => {
                     labelPlacement="end"
                     sx={{ flexGrow: 1, display: "flex", justifyContent: "center" }}
                 />
-                <div style={{display:'flex', justifyContent:'center', flexGrow:1, maxWidth:"100%"}}>
-                <MulticheckSelect options={Dietas} label={'Dietas'} selected={dietasSelecionadas} setSelected={setDietasSelecionadas} />
-                <MulticheckSelect options={Intolerancias} label={'Intolerancias'} selected={intoleranciasSelecionadas} setSelected={setIntoleranciasSelecionadas} />
+                <div style={{ display: 'flex', justifyContent: 'center', flexGrow: 1, maxWidth: "100%" }}>
+                    <MulticheckSelect options={Dietas} label={'Dietas'} selected={dietasSelecionadas} setSelected={setDietasSelecionadas} />
+                    <MulticheckSelect options={Intolerancias} label={'Intolerancias'} selected={intoleranciasSelecionadas} setSelected={setIntoleranciasSelecionadas} />
                 </div>
-                <Button variant="contained" sx={{ width: {xs:'100%', md:'20%'}, minWidth: "fit-content", flexGrow: 1 }} onClick={searchRecipes}>Buscar</Button>
+                <Button variant="contained" sx={{ width: { xs: '100%', md: '20%' }, minWidth: "fit-content", flexGrow: 1 }} onClick={searchRecipes}>Buscar</Button>
             </FormGroup>
         </FormControl>
     )
