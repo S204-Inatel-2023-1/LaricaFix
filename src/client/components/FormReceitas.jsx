@@ -5,7 +5,7 @@ import { Dietas, Intolerancias } from '../constants';
 
 const apiKey = import.meta.env.VITE_SPOONACULAR_KEY || ""
 
-export const FormReceitas = ({ setReceitas }) => {
+export const FormReceitas = ({ setUrl }) => {
     const [pesquisa, setPesquisa] = useState("");
     const [carrinho, setCarrinho] = useState(false);
     const [dietasSelecionadas, setDietasSelecionadas] = useState([]);
@@ -23,7 +23,7 @@ export const FormReceitas = ({ setReceitas }) => {
             requestUrl.searchParams.append("intolerancias", intoleranciasSelecionadas.join(","))
 
         requestUrl.searchParams.append("apiKey", apiKey)
-        fetch(requestUrl).then(res => res.json()).then(res => setReceitas(res.results))
+        setUrl(requestUrl.href)
     };
 
     return (
