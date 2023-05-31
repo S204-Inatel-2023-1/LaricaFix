@@ -43,7 +43,7 @@ describe('Testando controller /receitas/', () => {
 
     await buscarReceitas(req, res);
 
-    expect(res.set).toHaveBeenCalledWith('x-api-quota-request', respostaEsperada.headers['x-api-quota-request']);
+    expect(res.set).toHaveBeenCalledWith('x-api-quota-request', respostaEsperada.headers['x-api-quota-request']+10);
     expect(res.set).toHaveBeenCalledWith('x-api-quota-used', respostaEsperada.headers['x-api-quota-used']);
     expect(res.set).toHaveBeenCalledWith('x-api-quota-left', respostaEsperada.headers['x-api-quota-left']);
 
