@@ -30,9 +30,10 @@ export const Receita = () => {
 
     return (
         <Grid container spacing={5} columnGap={5}>
-            <Grid item xs={4}>
-                <Card sx={{ backgroundColor: 'transparent' }}>
-                    <CardHeader title={recipe.title} sx={{textAlign: 'center'}}/>
+            <Grid item xs={12} md={4}>
+                <Card sx={{ backgroundColor: 'transparent',
+                             height:'100%' }}>
+                    <CardHeader title={recipe.title} sx={{ textAlign: 'center' }} />
 
                     <CardMedia
                         component="img"
@@ -48,25 +49,25 @@ export const Receita = () => {
                             <Grid item xs={12}>
                                 <Chip icon={<RestaurantMenuIcon />} label={`Serve ${recipe.servings} pessoas`} sx={{ width: '100%' }} />
                             </Grid>
-                            <Grid item xs={6}>
-                                {recipe.vegetarian ? <Chip icon={<DoneIcon />} label={`Vegetariano`} color="success" sx={{ width: '100%' }}/> : <Chip icon={<ClearIcon />} label={`Vegetariano`} color="error" sx={{ width: '100%' }}/>}
+                            <Grid item xs={12} sm={6}>
+                                {recipe.veget2arian ? <Chip icon={<DoneIcon />} label={`Vegetariano`} color="success" sx={{ width: '100%' }} /> : <Chip icon={<ClearIcon />} label={`Vegetariano`} color="error" sx={{ width: '100%' }} />}
                             </Grid>
-                            <Grid item xs={6}>
-                                {recipe.dairyFree ? <Chip icon={<DoneIcon />} label={`Sem Lactose`} color="success" sx={{ width: '100%' }}/> : <Chip icon={<ClearIcon />} label={`Sem Lactose`} color="error" sx={{ width: '100%' }}/>}
+                            <Grid item xs={12} sm={6}>
+                                {recipe.dairyFree ? <Chip icon={<DoneIcon />} label={`Sem Lactose`} color="success" sx={{ width: '100%' }} /> : <Chip icon={<ClearIcon />} label={`Sem Lactose`} color="error" sx={{ width: '100%' }} />}
                             </Grid>
 
-                            <Grid item xs={6}>
-                            {recipe.vegan ? <Chip icon={<DoneIcon />} label={`Vegano`} color="success" sx={{ width: '100%' }}/> : <Chip icon={<ClearIcon />} label={`Vegano`} color="error" sx={{ width: '100%' }}/>}
+                            <Grid item xs={12} sm={6}>
+                                {recipe.vegan ? <Chip icon={<DoneIcon />} label={`Vegano`} color="success" sx={{ width: '100%' }} /> : <Chip icon={<ClearIcon />} label={`Vegano`} color="error" sx={{ width: '100%' }} />}
                             </Grid>
-                            <Grid item xs={6}>
-                            {recipe.glutenFree ? <Chip icon={<DoneIcon />} label={`Sem Glutem`} color="success" sx={{ width: '100%' }}/> : <Chip icon={<ClearIcon />} label={`Sem Glutem`} color="error" sx={{ width: '100%' }}/>}
+                            <Grid item xs={12} sm={6}>
+                                {recipe.glutenFree ? <Chip icon={<DoneIcon />} label={`Sem Glutem`} color="success" sx={{ width: '100%' }} /> : <Chip icon={<ClearIcon />} label={`Sem Glutem`} color="error" sx={{ width: '100%' }} />}
                             </Grid>
 
                             <Grid item xs={12}>
-                            <Chip
-                            icon={favorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-                            onClick={toggleFavorite} label={favorite ? "Adicionado aos favoritos" : "Adicionar aos favoritos"}
-                            color="primary" sx={{ width: '100%' }}/>
+                                <Chip
+                                    icon={favorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                                    onClick={toggleFavorite} label={favorite ? "Adicionado aos favoritos" : "Adicionar aos favoritos"}
+                                    color="primary" sx={{ width: '100%' }} />
                             </Grid>
 
                         </Grid>
@@ -77,8 +78,8 @@ export const Receita = () => {
                 </Card>
             </Grid>
 
-            <Grid item xs>
-                <Paper>
+            <Grid item md xs={12}>
+                <Paper sx={{height:'100%'}}>
                     <Typography sx={{ mt: 1, mb: 2 }} variant="h6" component="div">
                         Ingredientes
                     </Typography>
@@ -95,7 +96,8 @@ export const Receita = () => {
                 </Paper>
             </Grid>
 
-            {recipe.analyzedInstructions && <Grid item xs={5}>
+            {recipe.analyzedInstructions && <Grid item lg={5} xs={12} md={12}>
+            <Paper>
                 <Typography sx={{ mt: 1, mb: 2 }} variant="h6" component="div">
                     Modo de Preparo
                 </Typography>
@@ -117,6 +119,7 @@ export const Receita = () => {
                         <br />
                     </>
                 ))}
+                </Paper>
 
             </Grid>
             }
