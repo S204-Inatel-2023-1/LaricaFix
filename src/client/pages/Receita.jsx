@@ -85,8 +85,8 @@ export const Receita = () => {
                     </Typography>
 
                     <List dense>
-                        {recipe.extendedIngredients.map((i) => (
-                            <ListItemText primary={i.aisle}
+                        {recipe.extendedIngredients.map((i, key) => (
+                            <ListItemText primary={i.aisle} key={`ingredient_${key}`}
                                 secondary={i.unit ?
                                     <>{i.measures.metric.amount} {i.measures.metric.unitShort} </> :
                                     <>{i.measures.us.amount} {i.measures.us.unitShort}</>}>
@@ -102,18 +102,18 @@ export const Receita = () => {
                     Modo de Preparo
                 </Typography>
 
-                {recipe.analyzedInstructions.map((instruction, i) => (
+                {recipe.analyzedInstructions.map((instruction, key) => (
                     <>
                         {instruction.name && <>
-                            <Typography sx={{ mt: 1, mb: 2 }} variant="h7" component="div">
+                            <Typography sx={{ mt: 1, mb: 2 }} variant="h7" component="div" key={`instruction_${key}`}>
                                 {instruction.name}
                             </Typography>
                         </>}
 
                         <List dense>
-                            {instruction.steps.map((stepInfo) => (
+                            {instruction.steps.map((stepInfo, key) => (
                                 <>
-                                    <ListItemText primary={stepInfo.step} />
+                                    <ListItemText primary={stepInfo.step} key={`step_${stepInfo}_${key}`}/>
                                     <br></br>
                                 </>
                             ))}
