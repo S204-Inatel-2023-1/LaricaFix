@@ -5,7 +5,7 @@ import MockAdapter from 'axios-mock-adapter';
 import buscarReceitasPorID from './buscarReceitasPorID';
 import buscarReceitasPorIDMock from './mocks/buscarReceitasPorID';
 
-describe('Testando controller /receitas/id/', () => {
+describe('Testando controller /receitas/:id', () => {
 
   let mock;
   let req;
@@ -69,57 +69,75 @@ describe('Testando controller /receitas/id/', () => {
     const idPrato = '1'
     const respostaEsperada = {
       data: {
-        id: 9266,
-        original: "pineapples",
-        originalName: "pineapples",
-        name: "pineapples",
-        amount: 1,
-        unit: "",
-        unitShort: "",
-        unitLong: "",
-        possibleUnits: [],
-        estimatedCost: {
-          value: 299,
-          unit: "US Cents"
-        },
-        consistency: "solid",
-        shoppingListUnits: [
-          "pieces"
+        id: 716429,
+        title: "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs",
+        image: "https://spoonacular.com/recipeImages/716429-556x370.jpg",
+        imageType: "jpg",
+        servings: 2,
+        readyInMinutes: 45,
+        license: "CC BY-SA 3.0",
+        sourceName: "Full Belly Sisters",
+        sourceUrl: "http://fullbellysisters.blogspot.com/2012/06/pasta-with-garlic-scallions-cauliflower.html",
+        spoonacularSourceUrl: "https://spoonacular.com/pasta-with-garlic-scallions-cauliflower-breadcrumbs-716429",
+        healthScore: 19,
+        spoonacularScore: 83,
+        pricePerServing: 163.15,
+        analyzedInstructions: [],
+        cheap: false,
+        creditsText: "Full Belly Sisters",
+        cuisines: [],
+        dairyFree: false,
+        diets: [],
+        gaps: "no",
+        glutenFree: false,
+        instructions: "",
+        ketogenic: false,
+        lowFodmap: false,
+        occasions: [],
+        sustainable: false,
+        vegan: false,
+        vegetarian: false,
+        veryHealthy: false,
+        veryPopular: false,
+        whole30: false,
+        weightWatcherSmartPoints: 17,
+        dishTypes: [
+          "lunch",
+          "main course",
+          "main dish",
+          "dinner"
         ],
-        aisle: "Produce",
-        image: "pineapple.jpg",
-        meta: [],
-        nutrition: {
-          nutrients: [],
-          properties: [],
-          flavonoids: [
-            {
-              name: "Cyanidin",
-              amount: 0,
-              unit: "mg"
-            }
+        extendedIngredients: [],
+        summary: "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs",
+        winePairing: {
+          pairedWines: [
+            "chardonnay",
+            "gruener veltliner",
+            "sauvignon blanc"
           ],
-          caloricBreakdown: {
-            percentProtein: 3.88,
-            percentFat: 1.94,
-            percentCarbs: 94.18
-          },
-          weightPerServing: {
-            amount: 905,
-            unit: "g"
-          }
-        },
-        categoryPath: [
-          "tropical fruit",
-          "fruit"
-        ]
+          pairingText: "Chardonnay, Gruener Veltliner, and Sauvignon Blanc are great choices for Pasta. Sauvignon Blanc and Gruner Veltliner both have herby notes that complement salads with enough acid to match tart vinaigrettes, while a Chardonnay can be a good pick for creamy salad dressings. The Buddha Kat Winery Chardonnay with a 4 out of 5 star rating seems like a good match. It costs about 25 dollars per bottle.",
+          productMatches: [
+            {
+              id: 469199,
+              title: "Buddha Kat Winery Chardonnay",
+              description: "We barrel ferment our Chardonnay and age it in a mix of Oak and Stainless. Giving this light bodied wine modest oak character, a delicate floral aroma, and a warming finish.",
+              price: "$25.0",
+              imageUrl: "https://spoonacular.com/productImages/469199-312x231.jpg",
+              averageRating: 0.8,
+              ratingCount: 1,
+              score: 0.55,
+              link: "https://www.amazon.com/2015-Buddha-Kat-Winery-Chardonnay/dp/B00OSAVVM4?tag=spoonacular-20"
+            }
+          ]
+        }
       },
-      headers: {
+      headers:{
         'x-api-quota-request': '10',
         'x-api-quota-used': '10',
         'x-api-quota-left': '140',
       }
-    };
+    }
+
     const url = `https://api.spoonacular.com/recipes/${idPrato}/information?apiKey=${apiKey}&includeNutrition=true`;
     mock.onGet(url).reply(200, respostaEsperada.data, respostaEsperada.headers);
 
