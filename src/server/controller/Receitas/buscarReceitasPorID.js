@@ -19,7 +19,8 @@ export default async function (req, res) {
     res.set("x-api-quota-request", response.headers["x-api-quota-request"]);
     res.set("x-api-quota-used", response.headers["x-api-quota-used"]);
     res.set("x-api-quota-left", response.headers["x-api-quota-left"]);
-    res.status(200).json(response.data)
+    res.status(200)
+    res.json(response.data)
   } catch (error) {
     console.error(error);
   }

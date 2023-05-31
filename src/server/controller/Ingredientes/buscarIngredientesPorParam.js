@@ -2,7 +2,7 @@ import axios from 'axios';
 import buscarIngredientesPorNomeMock from "./mocks/buscarIngredientesPorNome.js";
 import buscarIngredientesPorIDMock from "./mocks/buscarIngredientesPorID.js";
 
-export default async function (req, res, next) {
+export default async function (req, res) {
   try {
     let response
     let url
@@ -28,7 +28,8 @@ export default async function (req, res, next) {
     res.set("x-api-quota-request", response.headers["x-api-quota-request"]);
     res.set("x-api-quota-used", response.headers["x-api-quota-used"]);
     res.set("x-api-quota-left", response.headers["x-api-quota-left"]);
-    res.status(200).json(response.data)
+    res.status(200)
+    res.json(response.data)
   } catch (error) {
     console.error(error);
   }
