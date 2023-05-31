@@ -62,8 +62,8 @@ export const Ingrediente = () => {
 
                         <CardMedia
                             component="img"
-                            height="194"
-                            image={ingredient.image}
+                            height="240"
+                            image={`https://spoonacular.com/cdn/ingredients_500x500/${ingredient.image}`}
                             alt={ingredient.title}
                         />
                         <CardContent>
