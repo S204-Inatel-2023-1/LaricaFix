@@ -79,7 +79,7 @@ export const Receita = () => {
             </Grid>
 
             <Grid item md xs={12}>
-                <Paper sx={{height:'100%'}}>
+                <Paper sx={{padding: '10px', overflowY:'auto', maxHeight:'525px', minHeight:'525px'}}>
                     <Typography sx={{ mt: 1, mb: 2 }} variant="h6" component="div">
                         Ingredientes
                     </Typography>
@@ -97,7 +97,7 @@ export const Receita = () => {
             </Grid>
 
             {recipe.analyzedInstructions && <Grid item lg={5} xs={12} md={12}>
-            <Paper>
+            <Paper sx={{padding: '10px', overflowY:'auto', maxHeight:'525px', minHeight:'525px'}}>
                 <Typography sx={{ mt: 1, mb: 2 }} variant="h6" component="div">
                     Modo de Preparo
                 </Typography>
@@ -112,7 +112,10 @@ export const Receita = () => {
 
                         <List dense>
                             {instruction.steps.map((stepInfo) => (
-                                <ListItemText primary={stepInfo.step} />
+                                <>
+                                    <ListItemText primary={stepInfo.step} />
+                                    <br></br>
+                                </>
                             ))}
                         </List >
 
