@@ -1,8 +1,11 @@
+//React Functions
 import { useEffect, useState } from "react"
+import { useLoaderData } from "react-router-dom";
 
-import { InformacoesReceita as rec } from "../constants/InformacoesReceita"
-import { Card, CardContent, CardHeader, CardMedia, Chip, Divider, Grid, List, ListItemText, Typography } from "@mui/material"
-import ListItem from '@mui/material/ListItem';
+// Material components
+import { Card, CardContent, CardHeader, CardMedia, Chip, Divider, Grid, List, ListItemText, Paper, Typography } from "@mui/material"
+
+//Material Icons
 import TimerIcon from '@mui/icons-material/Timer';
 import ClearIcon from '@mui/icons-material/Clear';
 import DoneIcon from '@mui/icons-material/Done';
@@ -13,11 +16,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 export const Receita = () => {
 
-
-
-    useEffect(() => {
-        document.title = rec.title
-    }, [])
+    const recipe = useLoaderData()
 
     const [favorite, setFavorite] = useState(false)
 
@@ -25,95 +24,105 @@ export const Receita = () => {
         setFavorite(!favorite)
     }
 
+    useEffect(() => {
+        document.title = recipe.title
+    }, [])
+
     return (
         <Grid container spacing={5} columnGap={5}>
-            <Grid item xs={4}>
-                <Card sx={{ backgroundColor: 'transparent' }}>
-                    <CardHeader title={rec.title} />
+            <Grid item xs={12} md={4}>
+                <Card sx={{ backgroundColor: 'transparent',
+                             height:'100%' }}>
+                    <CardHeader title={recipe.title} sx={{ textAlign: 'center' }} />
 
                     <CardMedia
                         component="img"
                         height="194"
-                        image={rec.image}
-                        alt={rec.title}
+                        image={recipe.image}
+                        alt={recipe.title}
                     />
                     <CardContent>
-                        <Grid container rowSpacing={2}>
+                        <Grid container spacing={2}>
                             <Grid item xs={12}>
-                                <Chip icon={<TimerIcon />} label={`Tempo de Preparo ${rec.readyInMinutes} minutos `} /> <br />
+                                <Chip icon={<TimerIcon />} label={`Tempo de Preparo ${recipe.readyInMinutes} minutos `} sx={{ width: '100%' }} />
                             </Grid>
                             <Grid item xs={12}>
-                                <Chip icon={<RestaurantMenuIcon />} label={`Serve ${rec.servings} pessoas`} /><br />
+                                <Chip icon={<RestaurantMenuIcon />} label={`Serve ${recipe.servings} pessoas`} sx={{ width: '100%' }} />
                             </Grid>
-                            <Grid item xs={6}>
-                                {rec.vegetarian ? <Chip icon={<DoneIcon />} label={`Vegetariano`} color="success" /> : <Chip icon={<ClearIcon />} label={`Vegetariano`} color="error" />}
+                            <Grid item xs={12} sm={6}>
+                                {recipe.veget2arian ? <Chip icon={<DoneIcon />} label={`Vegetariano`} color="success" sx={{ width: '100%' }} /> : <Chip icon={<ClearIcon />} label={`Vegetariano`} color="error" sx={{ width: '100%' }} />}
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                {recipe.dairyFree ? <Chip icon={<DoneIcon />} label={`Sem Lactose`} color="success" sx={{ width: '100%' }} /> : <Chip icon={<ClearIcon />} label={`Sem Lactose`} color="error" sx={{ width: '100%' }} />}
                             </Grid>
 
-                            <Grid item sx={{ display: 'flex', justifyContent: 'flex-end' }} xs={6}>
-                                {rec.dairyFree ? <Chip icon={<DoneIcon />} label={`Sem Lactose`} color="success" /> : <Chip icon={<ClearIcon />} label={`Sem Lactose`} color="error" />}
+                            <Grid item xs={12} sm={6}>
+                                {recipe.vegan ? <Chip icon={<DoneIcon />} label={`Vegano`} color="success" sx={{ width: '100%' }} /> : <Chip icon={<ClearIcon />} label={`Vegano`} color="error" sx={{ width: '100%' }} />}
                             </Grid>
-                            <Grid item xs={6}>
-                                {rec.vegan ? <Chip icon={<DoneIcon />} label={`Vegano`} color="success" /> : <Chip icon={<ClearIcon />} label={`Vegano`} color="error" />} <br />
-                            </Grid>
-                            <Grid item sx={{ display: 'flex', justifyContent: 'flex-end' }} xs={6}>
-                                {rec.glutenFree ? <Chip icon={<DoneIcon />} label={`Sem Glutem`} color="success" /> : <Chip icon={<ClearIcon />} label={`Sem Glutem`} color="error" />}
+                            <Grid item xs={12} sm={6}>
+                                {recipe.glutenFree ? <Chip icon={<DoneIcon />} label={`Sem Glutem`} color="success" sx={{ width: '100%' }} /> : <Chip icon={<ClearIcon />} label={`Sem Glutem`} color="error" sx={{ width: '100%' }} />}
                             </Grid>
 
-                            <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
+                            <Grid item xs={12}>
                                 <Chip
                                     icon={favorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                                     onClick={toggleFavorite} label={favorite ? "Adicionado aos favoritos" : "Adicionar aos favoritos"}
-                                    color="primary" />
+                                    color="primary" sx={{ width: '100%' }} />
                             </Grid>
+
                         </Grid>
+
 
 
                     </CardContent>
                 </Card>
             </Grid>
 
-            <Divider orientation="vertical" flexItem variant="middle" />
+            <Grid item md xs={12}>
+                <Paper sx={{padding: '10px', overflowY:'auto', maxHeight:'525px', minHeight:'525px'}}>
+                    <Typography sx={{ mt: 1, mb: 2 }} variant="h6" component="div">
+                        Ingredientes
+                    </Typography>
 
-            <Grid item xs>
-                <Typography sx={{ mt: 1, mb: 2 }} variant="h6" component="div">
-                    Ingredientes
-                </Typography>
-
-                <List dense>
-                    {rec.extendedIngredients.map((i) => (
-                        <ListItemText primary={i.aisle}
-                            secondary={i.unit ?
-                                <>{i.measures.metric.amount} {i.measures.metric.unitShort} </> :
-                                <>{i.measures.us.amount} {i.measures.us.unitShort}</>}>
-                        </ListItemText>))
-                    }
-                </List>
-
-
+                    <List dense>
+                        {recipe.extendedIngredients.map((i, key) => (
+                            <ListItemText primary={i.aisle} key={`ingredient_${key}`}
+                                secondary={i.unit ?
+                                    <>{i.measures.metric.amount} {i.measures.metric.unitShort} </> :
+                                    <>{i.measures.us.amount} {i.measures.us.unitShort}</>}>
+                            </ListItemText>))
+                        }
+                    </List>
+                </Paper>
             </Grid>
 
-            {rec.analyzedInstructions && <Grid item xs={5}>
+            {recipe.analyzedInstructions && <Grid item lg={5} xs={12} md={12}>
+            <Paper sx={{padding: '10px', overflowY:'auto', maxHeight:'525px', minHeight:'525px'}}>
                 <Typography sx={{ mt: 1, mb: 2 }} variant="h6" component="div">
                     Modo de Preparo
                 </Typography>
 
-                {rec.analyzedInstructions.map((instruction) => (
+                {recipe.analyzedInstructions.map((instruction, key) => (
                     <>
                         {instruction.name && <>
-                            <Typography sx={{ mt: 1, mb: 2 }} variant="h7" component="div">
+                            <Typography sx={{ mt: 1, mb: 2 }} variant="h7" component="div" key={`instruction_${key}`}>
                                 {instruction.name}
                             </Typography>
                         </>}
 
                         <List dense>
-                            {instruction.steps.map((stepInfo) => (
-                                <ListItemText primary={stepInfo.step} />
+                            {instruction.steps.map((stepInfo, key) => (
+                                <>
+                                    <ListItemText primary={stepInfo.step} key={`step_${stepInfo}_${key}`}/>
+                                    <br></br>
+                                </>
                             ))}
                         </List >
 
-                        <br/>
+                        <br />
                     </>
                 ))}
+                </Paper>
 
             </Grid>
             }

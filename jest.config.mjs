@@ -20,15 +20,20 @@ export default {
   collectCoverage: true,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  collectCoverageFrom: ["src/server/**"],
+  collectCoverageFrom: ["src/server/controller/**/*"],
 
   // The directory where Jest should output its coverage files
   // coverageDirectory: undefined,
 
   // An array of regexp pattern strings used to skip coverage collection
-  // coveragePathIgnorePatterns: [
-  //   "\\\\node_modules\\\\"
-  // ],
+  coveragePathIgnorePatterns: [
+    "\\\\node_modules\\\\",
+    "app.js",
+    "server.js",
+    "routes.js",
+    "index.js",
+    "/src/server/controller/Usuario/*"
+  ],
 
   // Indicates which provider should be used to instrument code for coverage
   coverageProvider: "v8",
