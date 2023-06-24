@@ -1,33 +1,39 @@
-import { FormReceitas, Listagem } from "../components";
-import { useEffect, useState } from "react";
-import { Box, CircularProgress } from "@mui/material";
+import { useState, useEffect, useContext } from "react"
+import { FormIngredientes, Listagem } from "../components"
+import { Box, CircularProgress } from "@mui/material"
+import { QuotaContext } from "../contexts"
 
-export const ListaReceitas = () => {
-    const [receitas, setReceitas] = useState([])
+export const ListaIngredientes = () => {
+    const [ingredientes, setIngredientes] = useState([])
     const [requestUrl, setRequestUrl] = useState("")
     const [isUpdating, setIsUpdating] = useState(false)
     const [isOver, setIsOver] = useState(false)
+    const { setUsedQuota } = useContext(QuotaContext)
 
     useEffect(() => {
         if (!requestUrl) return
         fetch(requestUrl)
-            .then(res => res.json())
+            .then(res => {
+                setUsedQuota(res.headers.get("x-api-quota-used"))
+                return res.json()
+            })
             .then(res => {
                 if (res.number + res.offset > res.totalResults) setIsOver(true)
-                return res
+                res.results.map(ing => ing.image = "https://spoonacular.com/cdn/ingredients_500x500/" + ing.image)
+                res.results.map(ing => ing.title = ing.name)
+                setIngredientes(prev => {
+                    if (requestUrl.includes("offset"))
+                        return [...prev, ...res.results]
+                    return res.results
+                })
+                setIsUpdating(false)
             })
-            .then(res => setReceitas(prev => {
-                if (requestUrl.includes("offset"))
-                    return [...prev, ...res.results]
-                return res.results
-            }))
-            .then(() => setIsUpdating(false))
-    }, [requestUrl])
+    }, [requestUrl]) 
 
     useEffect(() => {
         if (!isUpdating || !requestUrl.length) return
         const newUrl = new URL(requestUrl)
-        newUrl.searchParams.set("offset", receitas.length)
+        newUrl.searchParams.set("offset", ingredientes.length)
         setRequestUrl(newUrl.href)
     }, [isUpdating])
 
@@ -37,15 +43,15 @@ export const ListaReceitas = () => {
     }
 
     const update = () => {
-        if (isUpdating) return;
+        if (isUpdating || isOver) return;
         setIsUpdating(true)
     }
 
     return (<>
-        <FormReceitas setUrl={search} />
-        <Listagem itemsDaLista={receitas} url={"/receita/:id"} update={update} />
+        <FormIngredientes setUrl={search} />
+        <Listagem itemsDaLista={ingredientes} url={"/ingrediente/:id"} update={update} />
         {isUpdating && !isOver &&
-            <Box sx={{ display: 'flex' }}>
+            <Box sx={{ width: "100%", height: "20vh", display: 'grid', placeContent: "center" }}>
                 <CircularProgress />
             </Box>}
     </>)
