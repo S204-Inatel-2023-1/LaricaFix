@@ -39,9 +39,9 @@ const AnimatedComponent = ({ sx, component, animationProps }) => {
 
 export const Home = () => {
     return (
-        <Box sx={{ width: '100%', height: "80vh", display: "flex", flexDirection: "column", alignItems: 'center', position: 'relative' }}>
+        <Box sx={{ width: '100%', height: "100%", display: "flex", flexDirection: "column", alignItems: 'center', position: 'relative' }}>
             <Logo width="100%" height="90%" />
-            <Box sx={{ textAlign: "end", width: { xs: "100%", sm: "80%", md: "40%" }, position: 'absolute', bottom: "20%", right: { xs: "0%", sm: "15%", md: "25%" } }}>
+            <Box sx={{ textAlign: "end", width: { xs: "100%", sm: "80%", md: "40%" }, position: 'absolute', bottom: "30%", right: { xs: "0%", sm: "15%", md: "25%" } }}>
                 <Typography variant="h4" sx={{ fontWeight: "600", color: "secondary.light" }}>
                     Deu aquela fome, mas tá sem dinheiro pro delivery?
                 </Typography>

@@ -4,7 +4,7 @@ import { useState } from "react";
 export const Login = () => {
     const [estado, setEstado] = useState("login");
 
-    return (<Paper sx={{ width: { xs: "100%", sm: "500px" }, p: 3, m: "3em auto" }}>
+    return (<Paper sx={{ width: { xs: "100%", sm: "500px" }, p: 3, m: "5em auto" }}>
         {estado === "login" &&
             <>
                 <Typography variant="h4" component="h1" sx={{ my: 2 }}>
