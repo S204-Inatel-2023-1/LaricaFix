@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useContext } from 'react'
+import React, { useEffect, useRef, useContext, useMemo, useState } from 'react'
 import { Box, IconButton, Tooltip, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -6,14 +6,17 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
 import { useTheme } from '@mui/material/styles';
 import { UserContext } from '../contexts/';
+import { Favorites } from '../helper';
+
 export const Listagem = ({ itemsDaLista, url, update, cart }) => {
+    const [rerender, setRerender] = useState(false);
     const theme = useTheme();
     const navigate = useNavigate()
     const ref = useRef(null)
     const goTo = (id) => {
         navigate(url.replace(":id", id))
     }
-    const { logged } = useContext(UserContext)
+    const { logged, user } = useContext(UserContext)
     function checkScrollToBottom() {
         var div = ref.current;
         var windowHeight = window.innerHeight;
@@ -24,6 +27,10 @@ export const Listagem = ({ itemsDaLista, url, update, cart }) => {
             update();
         }
     }
+    const favoritesList = useMemo(() => {
+        if (!logged) return []
+        return Favorites.get(user._id).map((item) => item.id)
+    }, [logged, user, rerender])
 
     useEffect(() => {
         if (!ref.current || !update) return
@@ -66,8 +73,12 @@ export const Listagem = ({ itemsDaLista, url, update, cart }) => {
                                 {item.title}
                             </Typography>
                             {logged &&
-                                <IconButton sx={{ position: "absolute", top: "0%", right: "0%" }}>
-                                    <FavoriteIcon fontSize='large' sx={{ color: item.favorite ? theme.palette.error.light : theme.palette.background.paper }} stroke={theme.palette.text.primary} />
+                                <IconButton sx={{ position: "absolute", top: "0%", right: "0%" }} 
+                                onClick={()=>{
+                                    Favorites.toggle(user._id, item.id, item.title, item.image);
+                                    setRerender(!rerender);
+                                }}>
+                                    <FavoriteIcon fontSize='large' sx={{ color: favoritesList.includes(item.id) ? theme.palette.error.light : theme.palette.background.paper }} stroke={theme.palette.text.primary} />
                                 </IconButton>}
                             {cart &&
                                 <IconButton sx={{ position: "absolute", bottom: "0%", right: "0%" }} onClick={()=>alternarIngrediente(item, !cart.getIds().includes(item.id))}>

@@ -1,30 +1,34 @@
 import { Card, CardContent, CardHeader, CardMedia, Chip, Grid, Paper, Typography } from "@mui/material"
 import { DataGrid } from '@mui/x-data-grid';
 import { useLoaderData } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import BreakfastDiningIcon from '@mui/icons-material/BreakfastDining';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import EggIcon from '@mui/icons-material/Egg';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Favorites } from "../helper";
+import { UserContext } from "../contexts";
 
 export const Ingrediente = () => {
     const ingredient = useLoaderData()
-
+    const { user } = useContext(UserContext)
     const [favorite, setFavorite] = useState(false)
 
     const toggleFavorite = () => {
+        Favorites.toggle(user._id, ingredient.id, ingredient.name, ingredient.image)
         setFavorite(!favorite)
     }
 
     const columns = [
         { field: 'nome', headerName: 'Nome', width: 100 },
-        { field: 'qtd', headerName: 'Qtd / Porção',width:200  },
-        { field: 'vd', headerName: 'Valores Diarios (%)',width:200 },
+        { field: 'qtd', headerName: 'Qtd / Porção', width: 200 },
+        { field: 'vd', headerName: 'Valores Diarios (%)', width: 200 },
     ]
 
     useEffect(() => {
+        if (user) setFavorite(Favorites.isFavorite(user._id, ingredient.id))
         document.title = ingredient.name
     }, [])
 
@@ -86,12 +90,14 @@ export const Ingrediente = () => {
                                 <Grid item xs={12}>
                                     <Chip icon={<BreakfastDiningIcon />} label={`Carboidratos: ${ingredient.nutrition.caloricBreakdown.percentCarbs} %`} sx={{ width: '100%' }} />
                                 </Grid>
-                                <Grid item xs={12}>
-                                    <Chip
-                                        icon={favorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-                                        onClick={toggleFavorite} label={favorite ? "Adicionado aos favoritos" : "Adicionar aos favoritos"}
-                                        color="primary" sx={{ width: '100%' }} />
-                                </Grid>
+                                {user &&
+                                    <Grid item xs={12}>
+                                        <Chip
+                                            icon={favorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                                            onClick={toggleFavorite} label={favorite ? "Adicionado aos favoritos" : "Adicionar aos favoritos"}
+                                            color="primary" sx={{ width: '100%' }} />
+                                    </Grid>
+                                    }
 
                             </Grid>
 
@@ -103,7 +109,7 @@ export const Ingrediente = () => {
 
                 <Grid item md xs={12}>
                     <Paper sx={{ padding: '10px', overflowY: 'auto', maxHeight: '525px', minHeight: '525px' }}>
-                        <Typography sx={{ mt: 1, mb: 2, textAlign:'center' }} variant="h6" component="div">
+                        <Typography sx={{ mt: 1, mb: 2, textAlign: 'center' }} variant="h6" component="div">
                             Valores Diarios
                         </Typography>
                         <DataGrid

@@ -1,5 +1,5 @@
 //React Functions
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import { useLoaderData } from "react-router-dom";
 
 // Material components
@@ -13,26 +13,33 @@ import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
+import { Favorites } from "../helper";
+import { UserContext } from "../contexts";
 
 export const Receita = () => {
 
     const recipe = useLoaderData()
 
     const [favorite, setFavorite] = useState(false)
+    const { user } = useContext(UserContext)
 
     const toggleFavorite = () => {
+        Favorites.toggle(user._id, recipe.id, recipe.name, recipe.image)
         setFavorite(!favorite)
     }
 
     useEffect(() => {
+        if (user) setFavorite(Favorites.isFavorite(user._id, recipe.id))
         document.title = recipe.title
     }, [])
 
     return (
         <Grid container spacing={5} columnGap={5}>
             <Grid item xs={12} md={4}>
-                <Card sx={{ backgroundColor: 'transparent',
-                             height:'100%' }}>
+                <Card sx={{
+                    backgroundColor: 'transparent',
+                    height: '100%'
+                }}>
                     <CardHeader title={recipe.title} sx={{ textAlign: 'center' }} />
 
                     <CardMedia
@@ -63,13 +70,14 @@ export const Receita = () => {
                                 {recipe.glutenFree ? <Chip icon={<DoneIcon />} label={`Sem Glutem`} color="success" sx={{ width: '100%' }} /> : <Chip icon={<ClearIcon />} label={`Sem Glutem`} color="error" sx={{ width: '100%' }} />}
                             </Grid>
 
-                            <Grid item xs={12}>
-                                <Chip
-                                    icon={favorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-                                    onClick={toggleFavorite} label={favorite ? "Adicionado aos favoritos" : "Adicionar aos favoritos"}
-                                    color="primary" sx={{ width: '100%' }} />
-                            </Grid>
-
+                            {user &&
+                                <Grid item xs={12}>
+                                    <Chip
+                                        icon={favorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                                        onClick={toggleFavorite} label={favorite ? "Adicionado aos favoritos" : "Adicionar aos favoritos"}
+                                        color="primary" sx={{ width: '100%' }} />
+                                </Grid>
+                            }
                         </Grid>
 
 
@@ -79,7 +87,7 @@ export const Receita = () => {
             </Grid>
 
             <Grid item md xs={12}>
-                <Paper sx={{padding: '10px', overflowY:'auto', maxHeight:'525px', minHeight:'525px'}}>
+                <Paper sx={{ padding: '10px', overflowY: 'auto', maxHeight: '525px', minHeight: '525px' }}>
                     <Typography sx={{ mt: 1, mb: 2 }} variant="h6" component="div">
                         Ingredientes
                     </Typography>
@@ -97,31 +105,31 @@ export const Receita = () => {
             </Grid>
 
             {recipe.analyzedInstructions && <Grid item lg={5} xs={12} md={12}>
-            <Paper sx={{padding: '10px', overflowY:'auto', maxHeight:'525px', minHeight:'525px'}}>
-                <Typography sx={{ mt: 1, mb: 2 }} variant="h6" component="div">
-                    Modo de Preparo
-                </Typography>
+                <Paper sx={{ padding: '10px', overflowY: 'auto', maxHeight: '525px', minHeight: '525px' }}>
+                    <Typography sx={{ mt: 1, mb: 2 }} variant="h6" component="div">
+                        Modo de Preparo
+                    </Typography>
 
-                {recipe.analyzedInstructions.map((instruction, key) => (
-                    <>
-                        {instruction.name && <>
-                            <Typography sx={{ mt: 1, mb: 2 }} variant="h7" component="div" key={`instruction_${key}`}>
-                                {instruction.name}
-                            </Typography>
-                        </>}
+                    {recipe.analyzedInstructions.map((instruction, key) => (
+                        <>
+                            {instruction.name && <>
+                                <Typography sx={{ mt: 1, mb: 2 }} variant="h7" component="div" key={`instruction_${key}`}>
+                                    {instruction.name}
+                                </Typography>
+                            </>}
 
-                        <List dense>
-                            {instruction.steps.map((stepInfo, key) => (
-                                <>
-                                    <ListItemText primary={stepInfo.step} key={`step_${stepInfo}_${key}`}/>
-                                    <br></br>
-                                </>
-                            ))}
-                        </List >
+                            <List dense>
+                                {instruction.steps.map((stepInfo, key) => (
+                                    <>
+                                        <ListItemText primary={stepInfo.step} key={`step_${stepInfo}_${key}`} />
+                                        <br></br>
+                                    </>
+                                ))}
+                            </List >
 
-                        <br />
-                    </>
-                ))}
+                            <br />
+                        </>
+                    ))}
                 </Paper>
 
             </Grid>
