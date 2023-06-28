@@ -2,10 +2,11 @@ import MenuIcon from '@mui/icons-material/Menu';
 import {
     AppBar, Box, Button, CssBaseline, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar,
 } from '@mui/material';
-import * as React from 'react';
+import { useState, useContext } from 'react';
 import { Icone, Logo } from '../assets';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../contexts';
 
 const drawerWidth = 240;
 const navItems = [
@@ -17,17 +18,23 @@ const navItems = [
 
 export const BarraNavegacao = (props) => {
     const { window } = props;
-    const [mobileOpen, setMobileOpen] = React.useState(false);
+    const [mobileOpen, setMobileOpen] = useState(false);
     const navigate = useNavigate();
-    const user = { logado: true }
+    const { logged } = useContext(UserContext)
 
     const handleDrawerToggle = () => {
         setMobileOpen((prevState) => !prevState);
     };
 
     const getNavItems = () => {
+        if (logged === null)
+            return (
+                <Button sx={{ color: '#fff' }} onClick={() => navigate("/login")}>
+                    Entrar
+                </Button>
+            )
         return navItems.map((item) => (
-            (!item.somenteLogado || user.logado) &&
+            (!item.somenteLogado || logged === true) &&
             <Button key={item.titulo} sx={{ color: '#fff' }} onClick={() => navigate(item.rota)}>
                 {item.titulo}
             </Button>
@@ -37,7 +44,7 @@ export const BarraNavegacao = (props) => {
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
             <Box sx={{ backgroundColor: "primary.main" }}>
-                <Logo width="150px" height="90px"/>
+                <Logo width="150px" height="90px" />
             </Box>
             <Divider />
             <List>
@@ -50,7 +57,7 @@ export const BarraNavegacao = (props) => {
                     </ListItem>
                 ))}
 
-                {user.logado &&
+                {logged === true &&
                     <>
                         <Divider></Divider>
                         <ListItem key={"Perfil"} disablePadding>
@@ -60,7 +67,7 @@ export const BarraNavegacao = (props) => {
                         </ListItem>
                     </>}
                 {navItems.map((item) => (
-                    (item.somenteLogado && user.logado) &&
+                    (item.somenteLogado && logged === true) &&
                     <ListItem key={item.titulo} disablePadding>
                         <ListItemButton sx={{ textAlign: 'center' }} onClick={() => navigate(item.rota)}>
                             <ListItemText primary={item.titulo} />
@@ -92,7 +99,8 @@ export const BarraNavegacao = (props) => {
                     </Box>
                     <Box sx={{ display: { xs: 'none', sm: 'flex' }, alignItems: 'center', gap: '5px' }}>
                         {getNavItems()}
-                        <AccountCircleIcon sx={{ color: '#fff', fontSize: 60 }} />
+                        {logged === true &&
+                            <AccountCircleIcon sx={{ color: '#fff', fontSize: 60 }} />}
                     </Box>
                 </Toolbar>
             </AppBar>
@@ -113,8 +121,7 @@ export const BarraNavegacao = (props) => {
                     {drawer}
                 </Drawer>
             </Box>
-            <Box component="main" sx={{ p: 3, display: 'flex', flexDirection: 'column', alignItems:"center", width: '100%' }}>
-                <Toolbar />
+            <Box component="main" sx={{ p: 3, display: 'flex', flexDirection: 'column', alignItems: "center", width: '100%', height: `calc(100vh - 100px)`, paddingTop: "100px" }}>
                 {props.children}
             </Box>
         </Box>
