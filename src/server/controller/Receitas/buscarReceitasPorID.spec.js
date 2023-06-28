@@ -150,7 +150,8 @@ describe('Testando controller /receitas/:id', () => {
     expect(res.set).toHaveBeenCalledWith("x-api-quota-request", respostaEsperada.headers['x-api-quota-request']);
     expect(res.set).toHaveBeenCalledWith("x-api-quota-used", respostaEsperada.headers["x-api-quota-used"]);
     expect(res.set).toHaveBeenCalledWith("x-api-quota-left", respostaEsperada.headers["x-api-quota-left"]);
-    expect(res.status).toHaveBeenCalledWith(200);
+    // expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.status).toHaveBeenCalledWith(400); // Adição de erro para testar o deploy
     expect(res.json).toHaveBeenCalledWith(respostaEsperada.data);
   })
 
