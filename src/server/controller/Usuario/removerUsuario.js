@@ -1,23 +1,21 @@
-import usuarios from './database/database.js'
+import User from './models/usuario.js'
 
 export default async function (req, res) {
+  let {id} = req.query
+  
   try {
-    let {id} = req.body
+    const user = await User.findOne({_id: id})
 
-    const index = usuarios.findIndex(user => user.id == id);
-    if(index == -1){
-      res.status(404)
-      res.json({message:"id inválido"})
-      return
+    if (!user) {
+      return res.status(404).json({ message: 'Usuário não encontrado' });
     }
-
-    const {senha: _, ...usuarioBuscado} = usuarios[index];
-
-    usuarios.splice(index, 1)
     
-    res.status(200)
-    res.json(usuarioBuscado)
+    await User.findOneAndDelete({_id: id});
+    return res.json(user)
   } catch (error) {
-    console.error(error);
+    return res.status(500).json({
+      error: 'Falha na busca por usuário',
+      message: error
+    })
   }
 }

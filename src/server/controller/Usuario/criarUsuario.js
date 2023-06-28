@@ -1,17 +1,28 @@
-import usuarios from './database/database.js'
-import { v4 as uuidv4 } from 'uuid';
+import User from './models/usuario.js'
 
 export default async function (req, res) {
+  const {nome, email, senha} = req.body;
+  
   try {
-    let dadosUsuario = req.body
-    dadosUsuario.id = uuidv4();
-    usuarios.push(dadosUsuario)
+    const userExists = await User.findOne({email})
 
-    let user = usuarios.filter((user) => user.id == dadosUsuario.id)
-    let {senha: _, ...usuarioCriado} = user[0];
-    res.status(200)
-    res.json(usuarioCriado)
+    if (userExists){
+      return res.status(400).json({
+        error: 'Usuário já existe!',
+      })
+    }
+
+    const user = await User.create({
+      nome,
+      email,
+      senha
+    })
+
+    res.status(201).json(user);
   } catch (error) {
-    console.error(error);
+    return res.status(500).json({
+      error: 'Falha na criação de usuário',
+      message: error
+    })
   }
 }
