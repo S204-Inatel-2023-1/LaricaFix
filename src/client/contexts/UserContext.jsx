@@ -36,6 +36,7 @@ export const UserProvider = ({ children }) => {
     }
 
     useEffect(() => {
+        if(user === null) return
         setLogged(Boolean(user))
     }, [user])
 

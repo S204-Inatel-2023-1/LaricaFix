@@ -34,6 +34,7 @@ export const Login = () => {
             return setErro(retorno.message.replaceAll(/\b\w/g, m => m.toUpperCase()))
 
         setUser(retorno)
+        navigate("/receitas")
     }
 
     const cadastrar = async () => {
@@ -48,6 +49,7 @@ export const Login = () => {
 
         const retorno = await cadastrarUser(nome, email, senha);
         setUser(retorno)
+        navigate("/receitas")
     }
 
 

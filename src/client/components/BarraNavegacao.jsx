@@ -100,7 +100,9 @@ export const BarraNavegacao = (props) => {
                     <Box sx={{ display: { xs: 'none', sm: 'flex' }, alignItems: 'center', gap: '5px' }}>
                         {getNavItems()}
                         {logged === true &&
-                            <AccountCircleIcon sx={{ color: '#fff', fontSize: 60 }} />}
+                            <IconButton onClick={()=>navigate("/perfil")}>
+                                <AccountCircleIcon sx={{ color: '#fff', fontSize: 60 }} />
+                            </IconButton>}
                     </Box>
                 </Toolbar>
             </AppBar>
