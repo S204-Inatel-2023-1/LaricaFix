@@ -13,7 +13,7 @@ const navItems = [
     { titulo: "Receitas", rota: "/receitas", somenteLogado: false },
     { titulo: "Ingredientes", rota: "/ingredientes", somenteLogado: false },
     { titulo: "Favoritos", rota: "/favoritos", somenteLogado: true },
-    { titulo: "Histórico", rota: "/historico", somenteLogado: true },
+    /* { titulo: "Histórico", rota: "/historico", somenteLogado: true }, */
 ]
 
 export const BarraNavegacao = (props) => {
