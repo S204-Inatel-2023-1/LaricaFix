@@ -1,8 +1,11 @@
 import path from 'path'; // Módulo que trabalha com resolução de caminhos
 import express from 'express'; // Módulo que facilita a criação de um servidor
 import routes from './routes.js';  // Rotas da nossa aplicação
+import mongoose from 'mongoose';
 
 const app = express(); // Cria o servidor
+
+mongoose.connect(process.env.MONGO_URL)
 
 app.use(express.json());  // Configura o servidor para trabalhar com JSON
 app.use('/api', routes);  // Configura o servidor para receber requisições nas rotas desejadas

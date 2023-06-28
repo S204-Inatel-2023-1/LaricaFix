@@ -1,20 +1,20 @@
-import usuarios from './database/database.js'
+import User from './models/usuario.js'
 
 export default async function (req, res) {
+  let {email} = req.query
+  
   try {
-    let {email, senha} = req.query
+    const user = await User.findOne({email})
 
-    let user = usuarios.filter((user) => user.email == email && user.senha == senha)
-    if(user.length == 0){
-      res.status(404)
-      res.json({message:"usuario ou senha inválidos"})
-      return
+    if (!user) {
+      return res.status(404).json({ message: 'Usuário não encontrado' });
     }
-    let {senha: _, ...usuarioBuscado} = user[0];
     
-    res.status(200)
-    res.json(usuarioBuscado)
+    return res.json(user)
   } catch (error) {
-    console.error(error);
+    return res.status(500).json({
+      error: 'Falha na busca por usuário',
+      message: error
+    })
   }
 }
