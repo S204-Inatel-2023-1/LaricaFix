@@ -5,6 +5,7 @@ import {
 import { useState, useContext } from 'react';
 import { Icone, Logo } from '../assets';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../contexts';
 
@@ -20,7 +21,7 @@ export const BarraNavegacao = (props) => {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = useState(false);
     const navigate = useNavigate();
-    const { logged } = useContext(UserContext)
+    const { logged, logout } = useContext(UserContext)
 
     const handleDrawerToggle = () => {
         setMobileOpen((prevState) => !prevState);
@@ -48,32 +49,53 @@ export const BarraNavegacao = (props) => {
             </Box>
             <Divider />
             <List>
-                {navItems.map((item) => (
-                    !item.somenteLogado &&
-                    <ListItem key={item.titulo} disablePadding>
-                        <ListItemButton sx={{ textAlign: 'center' }} onClick={() => navigate(item.rota)}>
-                            <ListItemText primary={item.titulo} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
+                {
+                    logged === null ?
+                        <ListItemButton onClick={() => navigate("/login")}>
+                            <ListItemText primary="Entrar" />
+                        </ListItemButton> :
+                        <>
 
-                {logged === true &&
-                    <>
-                        <Divider></Divider>
-                        <ListItem key={"Perfil"} disablePadding>
-                            <ListItemButton sx={{ textAlign: 'center' }} onClick={() => navigate("./perfil")}>
-                                <ListItemText primary={"Perfil"} />
-                            </ListItemButton>
-                        </ListItem>
-                    </>}
-                {navItems.map((item) => (
-                    (item.somenteLogado && logged === true) &&
-                    <ListItem key={item.titulo} disablePadding>
-                        <ListItemButton sx={{ textAlign: 'center' }} onClick={() => navigate(item.rota)}>
-                            <ListItemText primary={item.titulo} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
+                            {
+                                navItems.map((item) => (
+                                    !item.somenteLogado &&
+                                    <ListItem key={item.titulo} disablePadding>
+                                        <ListItemButton sx={{ textAlign: 'center' }} onClick={() => navigate(item.rota)}>
+                                            <ListItemText primary={item.titulo} />
+                                        </ListItemButton>
+                                    </ListItem>
+                                ))
+                            }
+
+                            {logged === true &&
+                                <>
+                                    <Divider></Divider>
+                                    <ListItem key={"Perfil"} disablePadding>
+                                        <ListItemButton sx={{ textAlign: 'center' }} onClick={() => navigate("./perfil")}>
+                                            <ListItemText primary={"Perfil"} />
+                                        </ListItemButton>
+                                    </ListItem>
+                                </>}
+                            {navItems.map((item) => (
+                                (item.somenteLogado && logged === true) &&
+                                <ListItem key={item.titulo} disablePadding>
+                                    <ListItemButton sx={{ textAlign: 'center' }} onClick={() => navigate(item.rota)}>
+                                        <ListItemText primary={item.titulo} />
+                                    </ListItemButton>
+                                </ListItem>
+                            ))}
+                            {logged === true &&
+                                <>
+                                    <Divider></Divider>
+                                    <ListItem key={"Sair"} disablePadding>
+                                        <ListItemButton sx={{ textAlign: 'center' }} onClick={() => { logout(); navigate("/"); location.reload() }}>
+                                            <ListItemText primary={"Sair"} />
+                                        </ListItemButton>
+                                    </ListItem>
+                                </>}
+
+                        </>
+                }
             </List>
         </Box>
     );
@@ -94,15 +116,21 @@ export const BarraNavegacao = (props) => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }}}>
-                        <Icone width="75px" height="75px" sx={{cursor:'pointer'}} onClick={()=>navigate("/")}/>
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
+                        <Icone width="75px" height="75px" sx={{ cursor: 'pointer' }} onClick={() => navigate("/")} />
                     </Box>
                     <Box sx={{ display: { xs: 'none', sm: 'flex' }, alignItems: 'center', gap: '5px' }}>
                         {getNavItems()}
                         {logged === true &&
-                            <IconButton onClick={()=>navigate("/perfil")}>
-                                <AccountCircleIcon sx={{ color: '#fff', fontSize: 60 }} />
-                            </IconButton>}
+                            <>
+                                <IconButton onClick={() => navigate("/perfil")}>
+                                    <AccountCircleIcon sx={{ color: '#fff', fontSize: 60 }} />
+                                </IconButton>
+                                <IconButton onClick={() => { logout(); navigate("/"); location.reload() }}>
+                                    <LogoutIcon sx={{ color: '#fff', fontSize: 30 }} />
+                                </IconButton>
+
+                            </>}
                     </Box>
                 </Toolbar>
             </AppBar>

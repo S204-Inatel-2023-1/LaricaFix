@@ -1,10 +1,12 @@
 import React, { useEffect, createContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export const UserContext = createContext({
     logged: null, setLogged: () => { },
     user: null, setUser: () => { },
     retornarUser: () => { },
     cadastrarUser: () => { },
+    logout: () => { },
 })
 
 export const UserProvider = ({ children }) => {
@@ -36,15 +38,28 @@ export const UserProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        if(user === null) return
+        if (user === null) {
+            const user = JSON.parse(localStorage.getItem("user"))
+            if (!user) return
+            setUser(user)
+            setLogged(Boolean(user))
+        }
         setLogged(Boolean(user))
+        localStorage.setItem("user", JSON.stringify(user))
     }, [user])
+
+    const logout = () => {
+        localStorage.removeItem("user")
+        setUser(null)
+    }
+
 
     return (
         <UserContext.Provider value={{
             logged, setLogged,
             user, setUser,
-            cadastrarUser, retornarUser
+            cadastrarUser, retornarUser,
+            logout
         }}>
             {children}
         </UserContext.Provider>
