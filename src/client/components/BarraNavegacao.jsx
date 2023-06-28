@@ -94,8 +94,8 @@ export const BarraNavegacao = (props) => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
-                        <Icone width="75px" height="75px" />
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }}}>
+                        <Icone width="75px" height="75px" sx={{cursor:'pointer'}} onClick={()=>navigate("/")}/>
                     </Box>
                     <Box sx={{ display: { xs: 'none', sm: 'flex' }, alignItems: 'center', gap: '5px' }}>
                         {getNavItems()}
