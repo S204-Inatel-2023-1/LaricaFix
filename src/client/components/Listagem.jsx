@@ -1,17 +1,19 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useContext } from 'react'
 import { Box, IconButton, Tooltip, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
 import { useTheme } from '@mui/material/styles';
-
-export const Listagem = ({ itemsDaLista, url, update }) => {
+import { UserContext } from '../contexts/';
+export const Listagem = ({ itemsDaLista, url, update, cart }) => {
     const theme = useTheme();
     const navigate = useNavigate()
     const ref = useRef(null)
     const goTo = (id) => {
         navigate(url.replace(":id", id))
     }
-
+    const { logged } = useContext(UserContext)
     function checkScrollToBottom() {
         var div = ref.current;
         var windowHeight = window.innerHeight;
@@ -32,6 +34,11 @@ export const Listagem = ({ itemsDaLista, url, update }) => {
         };
     }, [ref]);
 
+    const alternarIngrediente = (item, adicionar) => {
+        adicionar?
+            cart.adicionarIngrediente(item):
+            cart.removerIngrediente(item)
+    }
 
     return (
         <>
@@ -48,19 +55,27 @@ export const Listagem = ({ itemsDaLista, url, update }) => {
                             position: "relative",
                             border: "3px solid",
                             borderColor: "secondary.light"
-                        }} onClick={() => goTo(item.id)}>
+                        }}>
                             <Box sx={{
                                 width: '100%', aspectRatio: '1.35', backgroundImage: `url(${item.image})`,
                                 backgroundPosition: 'center', backgroundSize: 'cover', borderRadius: '10px',
                                 cursor: 'pointer'
-                            }} >
+                            }} onClick={() => goTo(item.id)}>
                             </Box>
                             <Typography>
                                 {item.title}
                             </Typography>
-                            <IconButton sx={{ position: "absolute", top: "0%", right: "0%" }}>
-                                <FavoriteIcon fontSize='large' sx={{ color: item.favorite ? theme.palette.error.light : theme.palette.background.paper }} stroke={theme.palette.text.primary} />
-                            </IconButton>
+                            {logged &&
+                                <IconButton sx={{ position: "absolute", top: "0%", right: "0%" }}>
+                                    <FavoriteIcon fontSize='large' sx={{ color: item.favorite ? theme.palette.error.light : theme.palette.background.paper }} stroke={theme.palette.text.primary} />
+                                </IconButton>}
+                            {cart &&
+                                <IconButton sx={{ position: "absolute", bottom: "0%", right: "0%" }} onClick={()=>alternarIngrediente(item, !cart.getIds().includes(item.id))}>
+                                    {!cart.getIds().includes(item.id) ?
+                                        <AddBoxIcon fontSize='medium' sx={{ color: theme.palette.text.primary }} /> :
+                                        <IndeterminateCheckBoxIcon fontSize='medium' sx={{ color: theme.palette.text.primary }} />
+                                    }
+                                </IconButton>}
                         </Box>
                     </Tooltip>
                 ))}

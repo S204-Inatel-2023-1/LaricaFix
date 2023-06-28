@@ -11,4 +11,7 @@ routes.get('/receitas/:id', controller.buscarReceitasPorID);
 routes.get('/ingredientes/:param', controller.buscarIngredientesPorParam);
 
 //Usuario
+routes.post('/usuario', controller.criarUsuario)
+routes.get('/usuario', controller.buscarUsuario)
+routes.delete('/usuario', controller.removerUsuario)
 export default routes

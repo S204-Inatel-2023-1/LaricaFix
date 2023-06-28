@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { TextField, Button, FormControl, FormLabel, FormGroup } from '@mui/material';
 
 const apiKey = import.meta.env.VITE_SPOONACULAR_KEY || ""
-export const FormIngredientes = ({ setUrl }) => {
+export const FormIngredientes = ({ setUrl, limpar }) => {
     const [pesquisa, setPesquisa] = useState("");
 
     const searchIngredients = () => {
@@ -15,7 +15,7 @@ export const FormIngredientes = ({ setUrl }) => {
     return (
         <FormControl component="fieldset" sx={{ width: '100%', backgroundColor: "background.paper", padding: 2 }}>
             <FormLabel component="legend">Buscar Ingredientes</FormLabel>
-            <FormGroup aria-label="position" row sx={{ width: '100%', py: 1, display: 'flex' }}>
+            <FormGroup aria-label="position" row sx={{ width: '100%', py: 1, display: 'flex', gap:3 }}>
                 <TextField
                     id="filled-search"
                     label="Search field"
@@ -25,6 +25,7 @@ export const FormIngredientes = ({ setUrl }) => {
                     onChange={(e) => setPesquisa(e.target.value)}
                 />
                 <Button variant="contained" sx={{ width: { xs: '100%', md: '20%' }, minWidth: "fit-content" }} onClick={searchIngredients}>Buscar</Button>
+                <Button variant="contained" sx={{ minWidth: "fit-content", }} onClick={limpar}>Limpar Carrinho</Button>
             </FormGroup>
         </FormControl>
     )

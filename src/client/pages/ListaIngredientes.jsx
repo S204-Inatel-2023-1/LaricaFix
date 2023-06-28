@@ -1,29 +1,35 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { FormIngredientes, Listagem } from "../components"
 import { Box, CircularProgress } from "@mui/material"
+import { QuotaContext, CartContext } from "../contexts"
+
 export const ListaIngredientes = () => {
     const [ingredientes, setIngredientes] = useState([])
     const [requestUrl, setRequestUrl] = useState("")
     const [isUpdating, setIsUpdating] = useState(false)
     const [isOver, setIsOver] = useState(false)
+    const { setUsedQuota } = useContext(QuotaContext)
+    const cart = useContext(CartContext)
 
     useEffect(() => {
         if (!requestUrl) return
         fetch(requestUrl)
-            .then(res => res.json())
             .then(res => {
-                if(res.number+res.offset > res.totalResults) setIsOver(true)
+                setUsedQuota(res.headers.get("x-api-quota-used"))
+                return res.json()
+            })
+            .then(res => {
+                if (res.number + res.offset > res.totalResults) setIsOver(true)
                 res.results.map(ing => ing.image = "https://spoonacular.com/cdn/ingredients_500x500/" + ing.image)
                 res.results.map(ing => ing.title = ing.name)
-                return res
+                setIngredientes(prev => {
+                    if (requestUrl.includes("offset"))
+                        return [...prev, ...res.results]
+                    return res.results
+                })
+                setIsUpdating(false)
             })
-            .then(res => setIngredientes(prev => {
-                if (requestUrl.includes("offset"))
-                    return [...prev, ...res.results]
-                return res.results
-            }))
-            .then(() => setIsUpdating(false))
-    }, [requestUrl])
+    }, [requestUrl]) 
 
     useEffect(() => {
         if (!isUpdating || !requestUrl.length) return
@@ -43,10 +49,10 @@ export const ListaIngredientes = () => {
     }
 
     return (<>
-        <FormIngredientes setUrl={search} />
-        <Listagem itemsDaLista={ingredientes} url={"/ingrediente/:id"} update={update} />
+        <FormIngredientes setUrl={search} limpar={cart.limparCarrinho}/>
+        <Listagem itemsDaLista={ingredientes} url={"/ingrediente/:id"} update={update} cart={cart}/>
         {isUpdating && !isOver &&
-            <Box sx={{width:"100%", height:"20vh", display: 'grid', placeContent:"center" }}>
+            <Box sx={{ width: "100%", height: "20vh", display: 'grid', placeContent: "center" }}>
                 <CircularProgress />
             </Box>}
     </>)

@@ -1,7 +1,8 @@
 import { TextField, Button, Checkbox, FormControl, FormLabel, FormGroup, FormControlLabel } from '@mui/material';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { MulticheckSelect } from './';
 import { Dietas, Intolerancias } from '../constants';
+import { CartContext } from '../contexts';
 
 const apiKey = import.meta.env.VITE_SPOONACULAR_KEY || ""
 
@@ -10,18 +11,18 @@ export const FormReceitas = ({ setUrl }) => {
     const [carrinho, setCarrinho] = useState(false);
     const [dietasSelecionadas, setDietasSelecionadas] = useState([]);
     const [intoleranciasSelecionadas, setIntoleranciasSelecionadas] = useState([]);
+    const { getNames } = useContext(CartContext)
 
     const searchRecipes = () => {
         const requestUrl = new URL("../api/receitas", document.baseURI)
         if (pesquisa.length)
             requestUrl.searchParams.append("nome", pesquisa)
-        // if (carrinho)
-        //     requestUrl.searchParams.append("carrinho", carrinho)
+        if (carrinho)
+            requestUrl.searchParams.append("ingredientes", getNames().join(","))
         if (dietasSelecionadas.length)
             requestUrl.searchParams.append("dietas", dietasSelecionadas.join("|"))
         if (intoleranciasSelecionadas.length)
             requestUrl.searchParams.append("intolerancias", intoleranciasSelecionadas.join(","))
-
         requestUrl.searchParams.append("apiKey", apiKey)
         setUrl(requestUrl.href)
     };
